@@ -6,7 +6,7 @@
       "params": {
         "venv": "env",
         "path": "app",
-        "message": "python app.py",
+        "message": "{{exists('app/resemble-enhance/app.py') ? 'cd resemble-enhance && python app.py' : 'python app.py'}}",
         "on": [
           {
             "event": "/(http:\\/\\/[0-9.:]+)/",

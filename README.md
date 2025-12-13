@@ -11,6 +11,7 @@ Upstream project: https://github.com/resemble-ai/resemble-enhance
 - Installs PyTorch in a cross-platform way (`torch.js`), then installs Python deps with `uv pip`
 - Installs the package in editable mode (`uv pip install -e .`) so the `resemble-enhance` CLI is available
 - Starts the **Gradio web demo** (`python app.py`) and captures the live URL so Pinokio can show an **Open Web UI** button
+- Adds a **Batch** tab to the Gradio UI so you can upload multiple audio files and download a zip containing denoised and enhanced outputs
 
 ## Usage in Pinokio
 
@@ -31,6 +32,13 @@ Once installed:
 # From project root
 ./app/env/bin/resemble-enhance in_dir out_dir
 ```
+
+## Batch mode (web UI)
+
+1. Click **Start (web demo)** to launch the Gradio UI, then switch to the **Batch** tab.
+2. Upload multiple audio files (any supported audio format).
+3. Wait for processing to finish, then click **Download Zipped Results** to grab `_denoised` and `_enhanced` WAVs for each file.
+4. The table shows which outputs map to which inputs.
 
 Upstream CLI reference is in the Resemble Enhance README.
 

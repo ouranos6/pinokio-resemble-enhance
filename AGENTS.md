@@ -3,6 +3,7 @@
 ## Non-Negotiable Execution Workflow
 
 To guarantee every contribution follows this guide precisely, obey this checklist **before any edits** and **again before finalizing**. Do not skip or reorder.
+
 1. **AGENTS Snapshot:** Re-open this file and write down (in your working notes or response draft) the exact sections relevant to the requested task. No work begins until this snapshot exists.
 2. **Example Lock-in:** Identify the closest matching script in `/Users/andrew/pinokio/prototype/system/examples`. Record its path and keep it open while editing. Every launcher change must mirror that reference unless the user explicitly instructs otherwise.
 3. **Pre-flight Checklist:** Convert the applicable rules from this document and `PINOKIO.md` at /Users/andrew/pinokio/prototype/PINOKIO.md into a task-specific checklist (install/start/reset/update structure, regex patterns, menu defaults, log checks, etc.). Confirm each item is ticked **before** making changes.
@@ -16,6 +17,7 @@ If any step cannot be completed, stop immediately and ask the user how to procee
 When writing `start.js` (or any script that needs to surface a web URL for a server):
 
 1. **Always copy the capture block from an example such as `system/examples/mochi/start.js`.**
+
 ```javascript
 on: [{
   event: "/(http:\\/\\/[0-9.:]+)/",
@@ -24,6 +26,7 @@ on: [{
 ```
 
 2. **Set the local variable using the captured match exactly as below (The regex capture object is passed in as `input.event`, so need to use the index 1 inside the parenthesis):**
+
 ```javascript
 {
   method: "local.set",
@@ -45,11 +48,12 @@ Deviation from this pattern requires written approval from the user.
 - Finally, make sure to ALWAYS follow all the items in the "best practices" section below.
 
 ## Determine User Intent
+
 If the initial prompt is simply a URL and nothing else, check the website content and determine the intent, and ask the user to confirm. For example a URL may point to
 
 1. A Tutorial: the intent may be to implement a demo for the tutorial and build a launcher.
 2. A Demo: the intent may be a 1-click launcher for the demo
-3. Open source project: the intent may be a 1-click launcher for the project 
+3. Open source project: the intent may be a 1-click launcher for the project
 4. Regular website: the intent may be to clone the website and a launcher.
 5. There can be other cases, but try to guess.
 
@@ -77,7 +81,6 @@ project-root/
 - Keep app code in `/app` folder only (never in root)
 - Store all launcher files in project root (never in `/app`)
 - `/app` folder should be self-contained and publishable
-
 
 The only exceptions are serverless web apps---purely frontend only web applications that do NOT have a server component and connect to 3rd party API endpoints--in which case the folder structure looks like the following (No need for launcher scripts since the index.html will automatically launch. The only thing needed is the metadata file named pinokio.json):
 
@@ -133,34 +136,48 @@ The `pinokio/start.js` should use the correct path `../backend` as the `path` at
 ## Development Workflow
 
 ### 1. Understanding the Project
+
 - Check `SPEC.md` in project root. If the file exists, use that to learn about the project details (what and how to build)
 - If no `SPEC.md` exists, build based on user requirements
+
 ### 2. Modifying Existing Launcher Projects
+
 If we are starting with existing launcher script files, work with the existing files instead of coming up with your own.
+
 - **Preserve existing functionality:** Only modify necessary parts
 - **Don't touch working scripts:** Unless adding/updating specific commands
 - **Follow existing conventions:** Match the style and structure already present
+
 ### 3. Try to adopt from examples as much as possible
+
 - If starting from scratch, first determine what type of project you will be building, and then check the examples folder (/Users/andrew/pinokio/prototype/system/examples) to see if you can adopt them instead of coming up everything from scratch.
 - Even if there are no relevant examples, check the examples to get inspiration for how you would structure the script files even if you have to write from scratch.
+
 ### 4. Writing from scratch as a last resort
+
 If there are relevant examples to adopt from, write the scripts from scratch, but just make sure to follow the requirements in the next section.
+
 ### 5. Debugging
+
 When the user reports something is not working, ALWAYS inspect the logs folder to get all the execution logs. For more info on how this works, check the "Troubleshooting with Logs" section below.
 
 ## Script Requirements
 
 ### 1. 1-click launchable
+
 - The main purpose of Pinokio is to provide an easy interface to invoke commands, which may include launching servers, installing programs, etc. Make sure the final product provides ways to install, launch, reset, and update whatever is needed.
 
 ### 2. Write Documentation
+
 - ALWAYS write a documentation. A documentation must be stored as `README.md` in the project root folder, along with the rest of the pinokio launcher script files. A documentation file must contain:
   - What the app does
   - How to use the app
   - API documentation for programmatically accessing the app's main features (Javascript, Python, and Curl)
 
 ## Types of launchers
+
 ## 1. Launching servers
+
 - When an app requires launching a server, here are the commonly used scripts:
   - `install.js`: a script to install the app
   - `start.js`: a script to start the app
@@ -222,14 +239,14 @@ module.exports = {
 ## 2. Launching serverless web apps
 
 - In case of purely static web apps WITHOUT servers or backends (for example an HTML based app that connects to 3rd party servers--either remote or localhost), we do NOT need the launcher scripts.
-- In these cases, simply include `index.html` in the project root folder and everything should automatically work. No need for any of the pinokio launcher scripts. (Do 
+- In these cases, simply include `index.html` in the project root folder and everything should automatically work. No need for any of the pinokio launcher scripts. (Do
 - You still need to include the metadata file so they show up properly on pinokio:
   - `pinokio.json`: For metadata
 
 ## 3. Launching quick scripts without web UI
 
 - In many cases, we may not even need a web UI, but instead just a simple way to run scripts.
-- This may include TUI (Terminal User Interface) apps, a simple launcher 
+- This may include TUI (Terminal User Interface) apps, a simple launcher
 - In these cases, all we need is the launcher file `pinokio.js`, which may link to multiple scripts. In this case, there are no web apps (no serverless apsp, no servers), but instead just the default pinokio launcher UI that calls a bunch of scripts.
 - Here are some examples:
   - A pinokio script to toggle the desktop theme between dark and light
@@ -246,12 +263,14 @@ module.exports = {
 ## API
 
 This section lists all the script APIs available on Pinokio. To learn the details of how they are used, you can:
+
 1. Check the examples in the /Users/andrew/pinokio/prototype/system/examples folder
 2. Read the `PINOKIO.md` at /Users/andrew/pinokio/prototype/PINOKIO.md further documentation on the full syntax
 
 ### Script API
 
 These APIs can be used to describe each step in a pinokio script:
+
 - shell.run: run shell commands
 - input: accept user input
 - filepicker: accept file upload
@@ -276,8 +295,11 @@ These APIs can be used to describe each step in a pinokio script:
 - script.return: return values if the current script was called by a caller script, so the caller script can utilize the return value as `input`
 - web.open: open a url in web browser
 - hf.download: huggingfac-cli download API
+
 ### Template variables
+
 The following variables are accessible inside template expressions (example `{{args.command}` in scripts, resulting in dynamic behaviors of scripts:
+
 - input: An input is a variable that gets passed from one RPC call to the next
 - args: args is the parameter object that gets passed into the script (via pinokio.js `params`). Unlike `input` which takes the value passed in from the immediately previous step, `args` is a global value that is the same through out the entire script execution.
 - local: local variable object that can be set with `local.set` API
@@ -293,25 +315,32 @@ The following variables are accessible inside template expressions (example `{{a
 - next: The next variable points to the index of the next instruction to be executed. (null if the current instruction is the final instruction in the run array)
 - envs: You can access the environment variables of the currently running process with envs object.
 - which: Check whether a command exists (example: `{{which('winget')}}`. Can be used in the `when` attribute of a script step to run commands or install first.
-- exists: Check whether a file or folder exists at the specified relative path (example: `"when": "{{!exists('app')}}"`). Can be used with the `when` attribute to determine a path's existence and trigger custom logic. Use relative paths and it will resolve automatically to the current execution folder. 
-- running: Check whether a script file is running (example: `"when": "{{!running('start.js')}}"`). Can be used with the `when` attribute to determine a path's existence and trigger custom logic. Use relative paths and it will resolve automatically to the current execution folder. 
+- exists: Check whether a file or folder exists at the specified relative path (example: `"when": "{{!exists('app')}}"`). Can be used with the `when` attribute to determine a path's existence and trigger custom logic. Use relative paths and it will resolve automatically to the current execution folder.
+- running: Check whether a script file is running (example: `"when": "{{!running('start.js')}}"`). Can be used with the `when` attribute to determine a path's existence and trigger custom logic. Use relative paths and it will resolve automatically to the current execution folder.
 - os: Pinokio exposes the node.js os module through the os variable.
 - path: Pinokio exposes the node.js path module through the os variable (example: `{{path.resolve(...)}}`
 
 ## System Capabilities
+
 ### Package Management (Use in Order of Preference)
+
 The following package managers come pre-installed with Pinokio, so whenever you need to install a 3rd party binary, remember that these are available. Also, you can assume these are available and include the following package manager commands in Pinokio scripts:
+
 1. **UV** - For Python packages (preferred over pip)
 2. **NPM** - For Node.js packages  
 3. **Conda** - For cross-platform 3rd party binaries
 4. **Brew** - Mac-only fallback when other options unavailable
 5. **Git** - Full access to git is available.
 **Important:** Include all install commands in the install script for reproducibility.
+
 ### HTTPS Proxy Support
+
 - All HTTP servers automatically get HTTPS endpoints
 - Convention: `http://localhost:<PORT>` → `https://<PORT>.localhost`
 - Full proxy list available at: `http://localhost:2019/config/`
-### Pterm Features:
+
+### Pterm Features
+
 - **Clipboard Access:** Read from or Write to system clipboard via pinokio Pterm CLI (`pterm clipboard` command.)
 - **Notifications:** Send desktop alerts via pinokio pterm CLI (`pterm push` command.)
 - **Script Testing:** Run launcher scripts via pinokio pterm CLI (`pterm start` command.)
@@ -320,9 +349,11 @@ The following package managers come pre-installed with Pinokio, so whenever you 
 - **GitHub Integration:** Full GitHub CLI support (`gh` commands)
 
 ## Troubleshooting with Logs
+
 Pinokio stores the logs for everything that happened in terminal at the following locations, so you can make use of them to determine what's going on:
 
 ### Log Structure
+
 In case there is a `pinokio` folder in the project root folder, you should be able to find the logs folder here:
 
 ```
@@ -343,15 +374,20 @@ logs/
 ```
 
 ### Log File Naming
+
 - Unix timestamps for each session
 - Special "latest" file contains most recent session logs
 - **Default:** Use "latest" files for current issues
 - **Historical:** Use timestamped files for pattern analysis and the full history.
 
 ## Best practices
+
 ### 0. Always reference the logs when debugging
+
 - When the user asks to fix something, ALWAYS check the logs folder first to check what went wrong. Check the "Troubleshooting with Logs" section.
+
 ### 1. Shell commands for launching programs
+
 - Launch flags related
   - Try as hard as possible to minimize launch flags and parameters when launching an app. For example, instead of `python app.py --port 8610`, try to do `python app.py` unless really necessary. The only exception is when the only way to launch the app is to specify the flags.
 - Launch IP related
@@ -361,12 +397,18 @@ logs/
   - If the install instruction says to launch at a specific port, don't use the hardcoded port they suggest since there's a risk of port conflicts. Instead, use Pinokio's `{{port}}` template expression to automatically get the next available port.
   - For example, if the instruction says `python app.py --port 7860`, don't use that hardcoded port since there might be another app running at that port. Instead, automatically assign the next available port like this: `python app.py --port {{port}}`
   - Note that the `{{port}}` expression always returns the next immediately available port for each step, so if you have multiple steps in a script and use `{{port}}` in multiple steps, the value will be different. So if you want to launch at the next available port and then later reuse that port, you will need to first use `{{port}}` to get the next available port, and save the value in local variable using `local.set`, and then use the `{{local.<variable_name>}}` expression later.
+
 ### 2. shell.run API
+
 - When writing `shell.run` API requests, always use relative paths (no absolute paths) for the `path` field. For example, if you need to run a command from `app` folder, the `path` attribute should simply be `app`, instead of its full absolute path.
+
 ### 2. Package managers
+
 - When installing python packages, try best to use `uv` instead of `pip` even if the install instruction says to use pip. Instead of `pip install -r requirements.txt`, you can simply use `uv pip install -r requirements.txt` for example. Even if the project's own README says use pip or poetry, first check if there's a way to use uv instead.
 - When you need to install some global package, try to use `conda` as much as possible. Even on macs, `brew` should be only used if there are no `conda` options.
+
 ### 3. Minimal Always
+
 - If you are starting with existing script files, before modifying, creating, or removing any script files, first look at `pinokio.js` to understand which script files are actually used in the launcher. The only script files used are the ones mentioned in the `pinokio.js` file. The `pinokio.js` file is the file that constructs the UI dynamically.
 - Do not create a redundant script file that does something that already exists. Instead modify the existing script file for the feature. For example, do not create an `install.json` file for installation if `install.js` already exists. Instead, modify the `install.js` file.
 - Pinokio accepts both JSON and JS script files, so when determining whether a script for a specific purpose already exists, check both JSON and JS files mentioned in the `pinokio.js` file. Do not create script files for rendundant purpose.
@@ -374,20 +416,28 @@ logs/
   - The only exception when you may need to make changes to the project folder is when the user explicitly wants to modify the existing project. Otherwise if the purpose is to simply write a launcher, the app logic folder should never be touched.
 - When running shell commands, take full advantage of the Pinokio `shell.run` API, which provides features like `env`, `venv`, `input`, `path`, `sudo`, `on`, etc. which can greatly reduce the amount of script code.
   - Python apps: Always use virtual environments via `venv` attribute. This attribute automatically creates a venv or uses if it already exists.
+
 ### 4. Try to support Cross-platform as much as possible
+
 - Use cross-platform shell commands only.
 - This means, prefer to use commands that work on all platforms instead of the current platform.
 - If there are no cross platform commands, use Pinokio's template expressions to conditionally use commands depending on `platform`, `arch`, etc.
 - Also try to utilize Pinokio Pterm APIs for various cross-platform system features.
 - If it is impossible to implement a cross platform solution (due to the nature of the project itself), set the `platform`, `arch`, and/or `gpu` attributes of the `pinokio.json` file to declare the limitation.
 - Pinokio provides various APIs for cross-platform way of calling commonly used system functions, or lets you selectively run commands depending on `platform`, `arch`, etc.
+
 ### 5. Do not make assumptions about Pinokio API
+
 - Do NOT make assumptions about which Pinokio APIs exist. Check the documentation.
 - Do NOT make assumptions about the Pinokio API syntax. Follow the documentation.
+
 ### 6. Scripts must be able to replicate install and launch steps 100%
+
 - The whole point of the scripts is for others to easily download and invoke them via Pinokio interface with one click. Therefore, do not assume the end user's system state, and make everything self-contained.
 - When a 3rd party package needs to be installed, or a 3rd party repository needs to be downloaded, include them in the scripts.
+
 ### 7 Dynamic UI rendering
+
 - The `pinokio.js` launcher script can change dynamically depending on the current state of the script execution. Which means, depending on what the file returns, it can determine what the sidebar looks like at any given moment of the script cycle.
   - `info.exists(relative_path)`: The `info.exists` can be used to check whether a relative path (relative to the script root path) exists. The `pinokio.js` file can determine which menu items to return based on this value at any given moment.
   - `info.running(relative_path)`: The `info.running` can be used to check whether a script at a relative path is currently running (relative to the script root path) exists. The `pinokio.js` file can determine which menu items to return based on this value at any given moment.
@@ -397,19 +447,29 @@ logs/
     - when launching the `start.js` menu item needs to be set as the `default`, so it automatically executes the script
     - after the app has launched, the `default` needs to be set on the web UI URL, so the user is sent to the actual app automatically.
   - Check the examples in the /Users/andrew/pinokio/prototype/system/examples folder to see how these are being used.
+
 ### 8. No need for stop scripts
+
 - `pinokio.js` does NOT need a separate `stop` script. Every script that can be started can also be natively stopped through the Pinokio UI, therefore you do not need a separate stop script for start script
+
 ### 9. Writing launchers for existing projects
+
 - When writing or modifying pinokio launcher scripts, figure out the install/launch steps by reading the project folder `app`.
 - In most cases, the `README.md` file in the `/Users/andrew/pinokio/api/pinokio-resemble-enhance` folder contains the instructions needed to install and run the app, but if not, figure out by scanning the rest of the project files.
 - Install scripts should work for each specific operating system, so ignore Docker related instructions. Instead use install/launch instructions for each platform.
+
 ### 10. Don't use Docker unless really necessary
+
 - Some projects suggest docker as installation options. But even in these cases, try to find "development" options to launch the app without relying on Docker, as much as possible. We do not need Docker since we can automatically install and launch apps specifically for the user's platform, since we can write scripts that run cross platform.
+
 ### 11. pinokio.json
+
 - Do not touch the `version` field since the version is the script schema version and the one pre-set in `pinokio.js` must be used.
 - `icon`: It's best if we have a user friendly icon to represent the app, so try to get an image and link it from `pinokio.json`.
-  - If the git repository for the `/Users/andrew/pinokio/api/pinokio-resemble-enhance` folder points to GitHub (for example https://github.com/<USERNAME>/<REPO_NAME>`, ask the user if they want to download the icon from GitHub, and if approved, get the `avatar_url` by fetching `https://api.github.com/users/<USERNAME>`, and then download the image to the root folder as `icon.png`, and set `icon.png` as the `icon` field of the `pinokio.json`. 
+  - If the git repository for the `/Users/andrew/pinokio/api/pinokio-resemble-enhance` folder points to GitHub (for example <https://github.com/><USERNAME>/<REPO_NAME>`, ask the user if they want to download the icon from GitHub, and if approved, get the`avatar_url` by fetching `<https://api.github.com/users/><USERNAME>`, and then download the image to the root folder as`icon.png`, and set`icon.png` as the `icon` field of the `pinokio.json`.
+
 ### 12. Gitignore
+
 - When a launcher involves cloning 3rd party repositories, downloading files dynamically, or some files to be generated, these need to be included in the .gitignore file. This may include things like:
   - Cloning git repositories
   - Downloading files
@@ -417,6 +477,7 @@ logs/
 - Make sure these file paths are included in the .gitignore file, and if not, include them in .gitignore.
 
 ## AI Libraries (Pytorch, Xformers, Triton, Sageattention, etc.)
+
 If the launcher has a dedicated built-in script named `torch.js`, it can be used as follows:
 
 ```
@@ -454,18 +515,23 @@ module.exports = {
 
 The `torch.js` script also includes ways to install pytorch dependent libraries such as xformers, triton, sagetattention. If any of these libraries need to be installed, use the torch.js to install in order to install them cross platform.
 
-
 ## Quick Reference
+
 ### Essential Documentation
-- **Pinokio Programming:** See `PINOKIO.md` at /Users/andrew/pinokio/prototype/PINOKIO.md → "Programming Pinokio" section
-- **Dynamic Menus:** See `PINOKIO.md` at /Users/andrew/pinokio/prototype/PINOKIO.md → "Dynamic menu rendering" section  
-- **CLI Commands:** See `PTERM.md` at /Users/andrew/pinokio/prototype/PTERM.md
+
+- **Pinokio Programming:** See `PINOKIO.md` at `#file:/Users/andrew/pinokio/prototype/PINOKIO.md` → "Programming Pinokio" section
+- **Dynamic Menus:** See `PINOKIO.md` at `#file:/Users/andrew/pinokio/prototype/PINOKIO.md` → "Dynamic menu rendering" section  
+- **CLI Commands:** See `PTERM.md` at `#file:/Users/andrew/pinokio/prototype/PTERM.md`
+
 ### Common Patterns
+
 - **Python Virtual Env:** `shell.run` with `venv` attribute
 - **Cross-platform Commands:** Always test on multiple platforms
 - **Error Handling:** Check logs/api for launcher issues
 - **GitHub Operations:** Use `gh` CLI for advanced GitHub features
+
 ## Development Principles
+
 1. **Minimize Shell Usage:** Leverage API parameters instead of raw commands
 2. **Maintain Separation:** Keep app logic and launchers separate
 3. **Follow Conventions:** Match existing project patterns

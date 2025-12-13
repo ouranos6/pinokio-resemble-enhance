@@ -1,7 +1,7 @@
 {
   "run": [
     {
-      "when": "{{exists('app') && !exists('app/app.py')}}",
+      "when": "{{exists('app') && !exists('app/app.py') && !exists('app/resemble-enhance/app.py')}}",
       "method": "fs.rm",
       "params": {
         "path": "app"
@@ -13,6 +13,134 @@
       "params": {
         "message": "git clone --depth 1 https://github.com/resemble-ai/resemble-enhance.git app",
         "path": "."
+      }
+    },
+    {
+      "when": "{{exists('app/resemble-enhance/app.py')}}",
+      "method": "fs.copy",
+      "params": {
+        "src": "patches/app.py",
+        "dest": "app/resemble-enhance/app.py"
+      }
+    },
+    {
+      "when": "{{exists('app/app.py')}}",
+      "method": "fs.copy",
+      "params": {
+        "src": "patches/app.py",
+        "dest": "app/app.py"
+      }
+    },
+    {
+      "when": "{{exists('app/resemble-enhance/resemble_enhance')}}",
+      "method": "fs.copy",
+      "params": {
+        "src": "patches/resemble_enhance/enhancer/inference.py",
+        "dest": "app/resemble-enhance/resemble_enhance/enhancer/inference.py"
+      }
+    },
+    {
+      "when": "{{exists('app/resemble_enhance')}}",
+      "method": "fs.copy",
+      "params": {
+        "src": "patches/resemble_enhance/enhancer/inference.py",
+        "dest": "app/resemble_enhance/enhancer/inference.py"
+      }
+    },
+    {
+      "when": "{{exists('app/resemble-enhance/resemble_enhance')}}",
+      "method": "fs.copy",
+      "params": {
+        "src": "patches/resemble_enhance/denoiser/inference.py",
+        "dest": "app/resemble-enhance/resemble_enhance/denoiser/inference.py"
+      }
+    },
+    {
+      "when": "{{exists('app/resemble_enhance')}}",
+      "method": "fs.copy",
+      "params": {
+        "src": "patches/resemble_enhance/denoiser/inference.py",
+        "dest": "app/resemble_enhance/denoiser/inference.py"
+      }
+    },
+    {
+      "when": "{{exists('app/resemble-enhance/resemble_enhance')}}",
+      "method": "fs.copy",
+      "params": {
+        "src": "patches/resemble_enhance/utils/distributed.py",
+        "dest": "app/resemble-enhance/resemble_enhance/utils/distributed.py"
+      }
+    },
+    {
+      "when": "{{exists('app/resemble_enhance')}}",
+      "method": "fs.copy",
+      "params": {
+        "src": "patches/resemble_enhance/utils/distributed.py",
+        "dest": "app/resemble_enhance/utils/distributed.py"
+      }
+    },
+    {
+      "when": "{{exists('app/resemble-enhance/resemble_enhance')}}",
+      "method": "fs.copy",
+      "params": {
+        "src": "patches/resemble_enhance/utils/__init__.py",
+        "dest": "app/resemble-enhance/resemble_enhance/utils/__init__.py"
+      }
+    },
+    {
+      "when": "{{exists('app/resemble_enhance')}}",
+      "method": "fs.copy",
+      "params": {
+        "src": "patches/resemble_enhance/utils/__init__.py",
+        "dest": "app/resemble_enhance/utils/__init__.py"
+      }
+    },
+    {
+      "when": "{{exists('app/resemble-enhance/resemble_enhance')}}",
+      "method": "fs.copy",
+      "params": {
+        "src": "patches/resemble_enhance/enhancer/enhancer.py",
+        "dest": "app/resemble-enhance/resemble_enhance/enhancer/enhancer.py"
+      }
+    },
+    {
+      "when": "{{exists('app/resemble_enhance')}}",
+      "method": "fs.copy",
+      "params": {
+        "src": "patches/resemble_enhance/enhancer/enhancer.py",
+        "dest": "app/resemble_enhance/enhancer/enhancer.py"
+      }
+    },
+    {
+      "when": "{{exists('app/resemble-enhance/resemble_enhance')}}",
+      "method": "fs.copy",
+      "params": {
+        "src": "patches/resemble_enhance/enhancer/lcfm/cfm.py",
+        "dest": "app/resemble-enhance/resemble_enhance/enhancer/lcfm/cfm.py"
+      }
+    },
+    {
+      "when": "{{exists('app/resemble_enhance')}}",
+      "method": "fs.copy",
+      "params": {
+        "src": "patches/resemble_enhance/enhancer/lcfm/cfm.py",
+        "dest": "app/resemble_enhance/enhancer/lcfm/cfm.py"
+      }
+    },
+    {
+      "when": "{{exists('app/resemble-enhance/resemble_enhance')}}",
+      "method": "fs.copy",
+      "params": {
+        "src": "patches/resemble_enhance/enhancer/lcfm/lcfm.py",
+        "dest": "app/resemble-enhance/resemble_enhance/enhancer/lcfm/lcfm.py"
+      }
+    },
+    {
+      "when": "{{exists('app/resemble_enhance')}}",
+      "method": "fs.copy",
+      "params": {
+        "src": "patches/resemble_enhance/enhancer/lcfm/lcfm.py",
+        "dest": "app/resemble_enhance/enhancer/lcfm/lcfm.py"
       }
     },
     {
@@ -31,8 +159,8 @@
         "venv": "env",
         "path": "app",
         "message": [
-          "uv pip install -r requirements.txt gradio",
-          "uv pip install -e ."
+          "{{exists('resemble-enhance/requirements.txt') ? 'cd resemble-enhance && uv pip install -r requirements.txt gradio' : 'uv pip install -r requirements.txt gradio'}}",
+          "{{(exists('resemble-enhance/pyproject.toml') || exists('resemble-enhance/setup.py')) ? 'cd resemble-enhance && uv pip install -e .' : ((exists('pyproject.toml') || exists('setup.py')) ? 'uv pip install -e .' : 'echo Skipping editable install (no pyproject.toml/setup.py found)')}}"
         ]
       }
     }
