@@ -41,7 +41,15 @@
       "params": {
         "venv": "env",
         "path": "app",
-        "message": "pip install -e resemble-enhance gradio"
+        "message": "pip install gradio torchcodec torch torchaudio"
+      }
+    },
+    {
+      "method": "shell.run",
+      "params": {
+        "venv": "env",
+        "path": "app",
+        "message": "pip install -e resemble-enhance"
       }
     }
   ]
