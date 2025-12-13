@@ -159,7 +159,7 @@
         "venv": "env",
         "path": "app",
         "message": [
-          "{{exists('resemble-enhance/requirements.txt') ? 'cd resemble-enhance && uv pip install -r requirements.txt gradio' : 'uv pip install -r requirements.txt gradio'}}",
+          "{{exists('resemble-enhance/requirements.txt') ? 'uv pip install -r resemble-enhance/requirements.txt gradio' : 'uv pip install torch torchaudio librosa scipy rich pandas deepspeed gradio'}}",
           "{{(exists('resemble-enhance/pyproject.toml') || exists('resemble-enhance/setup.py')) ? 'cd resemble-enhance && uv pip install -e .' : ((exists('pyproject.toml') || exists('setup.py')) ? 'uv pip install -e .' : 'echo Skipping editable install (no pyproject.toml/setup.py found)')}}"
         ]
       }
