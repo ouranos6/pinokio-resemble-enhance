@@ -24,7 +24,7 @@
         "venv": "env",
         "path": "app",
         "message": [
-          "uv pip install -r requirements.txt",
+          "uv pip install -r requirements.txt gradio",
           "uv pip install -e ."
         ]
       }
