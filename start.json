@@ -1,0 +1,19 @@
+{
+  "daemon": true,
+  "run": [
+    {
+      "method": "shell.run",
+      "params": {
+        "venv": "env",
+        "path": "app",
+        "message": "python resemble-enhance/app.py",
+        "on": [
+          {
+            "event": "/http:\\/\\/\\S+/",
+            "done": true
+          }
+        ]
+      }
+    }
+  ]
+}

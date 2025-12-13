@@ -1,0 +1,19 @@
+{
+  "run": [
+    {
+      "method": "shell.run",
+      "params": {
+        "message": "git -C app/resemble-enhance pull --ff-only",
+        "path": "."
+      }
+    },
+    {
+      "method": "shell.run",
+      "params": {
+        "venv": "env",
+        "path": "app",
+        "message": "python -m pip install --upgrade pip wheel setuptools && pip install -r resemble-enhance/requirements.txt && pip install -e resemble-enhance"
+      }
+    }
+  ]
+}
