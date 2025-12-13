@@ -1,6 +1,13 @@
 {
   "run": [
     {
+      "when": "{{exists('app') && !exists('app/app.py')}}",
+      "method": "fs.rm",
+      "params": {
+        "path": "app"
+      }
+    },
+    {
       "when": "{{!exists('app')}}",
       "method": "shell.run",
       "params": {

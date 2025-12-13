@@ -1,6 +1,12 @@
 {
   "run": [
     {
+      "method": "script.stop",
+      "params": {
+        "uri": "{{path.resolve(cwd, 'start.json')}}"
+      }
+    },
+    {
       "method": "fs.rm",
       "params": {
         "path": "app"

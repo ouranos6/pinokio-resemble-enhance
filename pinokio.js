@@ -4,7 +4,7 @@ module.exports = {
   "description": "AI-powered speech denoising + enhancement (Gradio web demo + CLI).",
   "icon": "icon.png",
   "menu": async (kernel, info) => {
-    const installed = info.exists("app/env")
+    const installed = info.exists("app/env") && info.exists("app/app.py")
 
     const running = {
       install: info.running("install.json"),
