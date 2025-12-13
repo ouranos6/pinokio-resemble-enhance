@@ -41,7 +41,7 @@
       "params": {
         "venv": "env",
         "path": "app",
-        "message": "pip install -e resemble-enhance"
+        "message": "pip install -e resemble-enhance gradio"
       }
     }
   ]
