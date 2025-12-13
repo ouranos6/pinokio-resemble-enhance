@@ -1,0 +1,11 @@
+{
+  "title": "Resemble Enhance",
+  "description": "AI-powered speech denoising + enhancement (Gradio web demo + CLI).",
+  "icon": "icon.png",
+  "links": [
+    {
+      "title": "Upstream Project",
+      "value": "https://github.com/resemble-ai/resemble-enhance"
+    }
+  ]
+}

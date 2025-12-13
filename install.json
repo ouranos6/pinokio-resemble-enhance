@@ -1,55 +1,32 @@
 {
   "run": [
     {
+      "when": "{{!exists('app')}}",
       "method": "shell.run",
       "params": {
-        "message": "git clone --depth 1 https://github.com/resemble-ai/resemble-enhance.git app/resemble-enhance",
-        "path": ".",
-        "on": [
-          {
-            "event": "/Cloning into|already exists/",
-            "done": true
-          }
+        "message": "git clone --depth 1 https://github.com/resemble-ai/resemble-enhance.git app",
+        "path": "."
+      }
+    },
+    {
+      "method": "script.start",
+      "params": {
+        "uri": "torch.js",
+        "params": {
+          "venv": "env",
+          "path": "app"
+        }
+      }
+    },
+    {
+      "method": "shell.run",
+      "params": {
+        "venv": "env",
+        "path": "app",
+        "message": [
+          "uv pip install -r requirements.txt",
+          "uv pip install -e ."
         ]
-      }
-    },
-    {
-      "method": "shell.run",
-      "params": {
-        "message": "python -m venv env",
-        "path": "app"
-      }
-    },
-    {
-      "method": "shell.run",
-      "params": {
-        "venv": "env",
-        "path": "app",
-        "message": "python -m pip install --upgrade pip wheel setuptools"
-      }
-    },
-    {
-      "method": "shell.run",
-      "params": {
-        "venv": "env",
-        "path": "app",
-        "message": "pip install gradio torchcodec torch torchaudio"
-      }
-    },
-    {
-      "method": "shell.run",
-      "params": {
-        "venv": "env",
-        "path": "app",
-        "message": "pip install -r resemble-enhance/requirements.txt"
-      }
-    },
-    {
-      "method": "shell.run",
-      "params": {
-        "venv": "env",
-        "path": "app",
-        "message": "pip install -e resemble-enhance"
       }
     }
   ]

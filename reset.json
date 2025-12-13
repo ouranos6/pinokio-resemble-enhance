@@ -1,10 +1,9 @@
 {
   "run": [
     {
-      "method": "shell.run",
+      "method": "fs.rm",
       "params": {
-        "path": ".",
-        "message": "python -c \"import shutil; shutil.rmtree('app/env', ignore_errors=True); shutil.rmtree('app/resemble-enhance', ignore_errors=True)\""
+        "path": "app"
       }
     }
   ]

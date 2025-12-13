@@ -3,7 +3,7 @@
     {
       "method": "shell.run",
       "params": {
-        "message": "git -C app/resemble-enhance pull --ff-only",
+        "message": "git -C app pull --ff-only",
         "path": "."
       }
     },
@@ -12,7 +12,10 @@
       "params": {
         "venv": "env",
         "path": "app",
-        "message": "python -m pip install --upgrade pip wheel setuptools && pip install -r resemble-enhance/requirements.txt && pip install -e resemble-enhance"
+        "message": [
+          "uv pip install -r requirements.txt",
+          "uv pip install -e ."
+        ]
       }
     }
   ]
