@@ -33,7 +33,7 @@
       "params": {
         "venv": "env",
         "path": "app",
-        "message": "pip install -r resemble-enhance/requirements.txt"
+        "message": "pip install gradio torchcodec torch torchaudio"
       }
     },
     {
@@ -41,7 +41,7 @@
       "params": {
         "venv": "env",
         "path": "app",
-        "message": "pip install gradio torchcodec torch torchaudio"
+        "message": "pip install -r resemble-enhance/requirements.txt"
       }
     },
     {
