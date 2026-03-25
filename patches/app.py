@@ -6,6 +6,28 @@ from typing import List, Optional, Tuple
 import gradio as gr
 import torch
 import torchaudio
+import os
+# ... (ajouts en haut du fichier)
+_GRADIO_MAJOR = int(gr.__version__.split(".")[0])
+
+# Dans main(), remplacer le gr.File par :
+if _GRADIO_MAJOR >= 5:
+    _file_component = gr.File(
+        file_count="multiple",
+        file_types=[".mp3", ".wav", ".ogg", ".flac", ".m4a", ".aac"],
+        label="Input Audio Files (multiple)",
+    )
+else:
+    _file_component = gr.File(
+        type="filepath",
+        file_count="multiple",
+        file_types=["audio"],
+        label="Input Audio Files (multiple)",
+    )
+
+# Et remplacer .launch() par :
+port = int(os.environ.get("PORT", 7860))
+gr.TabbedInterface([...]).launch(server_name="0.0.0.0", server_port=port, share=True)
 
 from resemble_enhance.enhancer.inference import denoise, enhance
 
