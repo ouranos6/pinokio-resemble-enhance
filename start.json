@@ -6,10 +6,10 @@
       "params": {
         "venv": "env",
         "path": "app",
-        "message": "{{exists('app/resemble-enhance/app.py') ? 'cd resemble-enhance && python app.py' : 'python app.py'}}",
+        "message": "python app.py",
         "on": [
           {
-            "event": "/(http:\\/\\/[0-9.:]+)/",
+            "event": "/https?:\\/\\/[0-9a-zA-Z.:-]+/",
             "done": true
           }
         ]
@@ -17,9 +17,7 @@
     },
     {
       "method": "local.set",
-      "params": {
-        "url": "{{input.event[1]}}"
-      }
+      "params": { "url": "{{input.event[0]}}" }
     }
   ]
 }
