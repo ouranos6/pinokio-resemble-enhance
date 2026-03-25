@@ -1,10 +1,10 @@
 module.exports = {
-  "version": "2.0",
+  "version": "6.0.0",
   "title": "Resemble Enhance",
   "description": "AI-powered speech denoising + enhancement (Gradio web demo + CLI).",
   "icon": "icon.png",
   "menu": async (kernel, info) => {
-    const installed = info.exists("app/env") && (info.exists("app/app.py") || info.exists("app/resemble-enhance/app.py"))
+    const installed = info.exists("app/env") && info.exists("app/app.py")
 
     const running = {
       install: info.running("install.json"),
